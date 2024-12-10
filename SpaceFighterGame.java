@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 public class SpaceFighterGame extends JFrame {
     public SpaceFighterGame() {
@@ -10,7 +8,7 @@ public class SpaceFighterGame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Panel principal para el juego
+        // Panel Para juego
         GamePanel gamePanel = new GamePanel();
         add(gamePanel);
     }
