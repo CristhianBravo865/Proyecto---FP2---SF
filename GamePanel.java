@@ -3,33 +3,40 @@ import java.awt.*;
 import java.awt.event.*;
 
 class GamePanel extends JPanel {
-    private int playerX = 375; // Posición inicial del juga
+    private int playerX = 375; // Posición inicial del jugador
     private int playerY = 500;
-    private boolean left, right, up, down; // Flags movimiento
+    private boolean left, right, up, down; // Flags de movimiento
 
     public GamePanel() {
         setBackground(Color.BLACK);
-        setFocusable(true);
+        setFocusable(true); // Asegura que este panel capture eventos de teclado
+        requestFocusInWindow(); // Solicita el foco para este panel
+
         Timer timer = new Timer(10, e -> updateGame());
         timer.start();
-    }
 
-    public void handleKeyPress(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT -> left = true;
-            case KeyEvent.VK_RIGHT -> right = true;
-            case KeyEvent.VK_UP -> up = true;
-            case KeyEvent.VK_DOWN -> down = true;
-        }
-    }
+        // Agregar eventos de teclado directamente al panel
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT -> left = true;
+                    case KeyEvent.VK_RIGHT -> right = true;
+                    case KeyEvent.VK_UP -> up = true;
+                    case KeyEvent.VK_DOWN -> down = true;
+                }
+            }
 
-    public void handleKeyRelease(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT -> left = false;
-            case KeyEvent.VK_RIGHT -> right = false;
-            case KeyEvent.VK_UP -> up = false;
-            case KeyEvent.VK_DOWN -> down = false;
-        }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT -> left = false;
+                    case KeyEvent.VK_RIGHT -> right = false;
+                    case KeyEvent.VK_UP -> up = false;
+                    case KeyEvent.VK_DOWN -> down = false;
+                }
+            }
+        });
     }
 
     private void updateGame() {
@@ -37,6 +44,11 @@ class GamePanel extends JPanel {
         if (right) playerX += 5;
         if (up) playerY -= 5;
         if (down) playerY += 5;
+
+        // Mantener la nave dentro de los límites de la ventana
+        playerX = Math.max(0, Math.min(playerX, getWidth() - 50));
+        playerY = Math.max(0, Math.min(playerY, getHeight() - 50));
+
         repaint();
     }
 
