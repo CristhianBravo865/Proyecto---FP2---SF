@@ -9,8 +9,8 @@ class GamePanel extends JPanel {
 
     public GamePanel() {
         setBackground(Color.BLACK);
-        setFocusable(true); // Asegura que este panel capture eventos de teclado
-        requestFocusInWindow(); // Solicita el foco para este panel
+        setFocusable(true); // Foco para los eventos del teclado
+        requestFocusInWindow(); 
 
         Timer timer = new Timer(10, e -> updateGame());
         timer.start();

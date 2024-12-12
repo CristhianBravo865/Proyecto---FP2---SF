@@ -14,7 +14,7 @@ public abstract class NaveAlienigena {
     // Dibujar la nave
     public abstract void dibujar(Graphics g);
 
-    // Mover Nave
+    // Mover Nave - Se deberia implementar??
     public void mover(int dx) {
         x += dx;
     }
