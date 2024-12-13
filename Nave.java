@@ -1,41 +1,23 @@
 public abstract class Nave {
-    private int fila;
-    private int columna;
-    private char simbolo; // Representación visual de la nave en el tablero
+    protected int vida;
+    protected int movimiento;
+    protected int daño;
+    protected int alcance;
 
-    public Nave(char simbolo) {
-        this.simbolo = simbolo;
-    }
-
-    // Métodos para obtener la posición actual
-    public int getFila() {
-        return fila;
-    }
-
-    public int getColumna() {
-        return columna;
-    }
-
-    // Método para establecer la posición de la nave
-    public void setPosicion(int fila, int columna) {
-        this.fila = fila;
-        this.columna = columna;
-    }
-
-    // Método para obtener el símbolo de la nave
-    public char getSimbolo() {
-        return simbolo;
-    }
-
-    // Método abstracto que define cómo se mueve la nave
-    public abstract boolean puedeMoverse(int nuevaFila, int nuevaColumna, Tablero tablero);
-
-    // Método abstracto que define la acción de ataque de la nave
+    public abstract void mover(int fila, int columna, Tablero tablero);
     public abstract void atacar(Nave objetivo, Tablero tablero);
+    public abstract void habilidadEspecial();
 
-    // Método abstracto para realizar acciones específicas de la nave (por turno)
-    public abstract void realizarAccion();
+    // Getters y setters básicos
+    public int getVida() {
+        return vida;
+    }
 
-    // Método abstracto que define si una nave puede ser atacada
-    public abstract boolean esAtacable();
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public boolean estaDestruida() {
+        return vida <= 0;
+    }
 }

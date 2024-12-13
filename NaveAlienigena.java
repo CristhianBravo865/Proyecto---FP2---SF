@@ -1,24 +1,11 @@
-import java.awt.*;
-
-public abstract class NaveAlienigena {
-    protected int x, y; // Posición de la nave
-    protected int ancho, alto; // Tamaño de la nave
-
-    public NaveAlienigena(int x, int y, int ancho, int alto) {
-        this.x = x;
-        this.y = y;
-        this.ancho = ancho;
-        this.alto = alto;
+public abstract class NaveAlienigena extends Nave {
+    @Override
+    public void mover(int fila, int columna, Tablero tablero) {
+        // Lógica de movimiento para las naves alienígenas
     }
 
-    // Dibujar la nave
-    public abstract void dibujar(Graphics g);
-
-    // Mover Nave - Se deberia implementar??
-    public void mover(int dx) {
-        x += dx;
+    @Override
+    public void atacar(Nave objetivo, Tablero tablero) {
+        // Lógica de ataque específica para naves alienígenas
     }
-
-    // Puntaje que vale la nave
-    public abstract int getPuntaje();
 }
