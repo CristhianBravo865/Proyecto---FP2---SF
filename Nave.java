@@ -54,6 +54,18 @@ public abstract class Nave {
         this.daño = daño;
     }
 
+    public int getFilaActual() {
+        return filaActual;
+    }
+    public void setFilaActual(int filaActual) {
+        this.filaActual = filaActual;
+    }
+    public int getColumnaActual() {
+        return columnaActual;
+    }
+    public void setColumnaActual(int columnaActual) {
+        this.columnaActual = columnaActual;
+    }
     public int getAlcance() {
         return alcance;
     }
