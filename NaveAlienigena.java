@@ -1,11 +1,24 @@
 public abstract class NaveAlienigena extends Nave {
     @Override
     public void mover(int fila, int columna, Tablero tablero) {
-        // Lógica de movimiento para las naves alienígenas
+        if (posicionValida(fila, columna, tablero)) {
+            tablero.getTablero()[filaActual][columnaActual] = " ";
+            tablero.getTablero()[fila][columna] = nombre;
+            filaActual = fila;
+            columnaActual = columna;
+        } else {
+            System.out.println("Movimiento no válido.");
+        }
     }
 
     @Override
     public void atacar(Nave objetivo, Tablero tablero) {
-        // Lógica de ataque específica para naves alienígenas
+        int distancia = Math.abs(filaActual - objetivo.filaActual) + Math.abs(columnaActual - objetivo.columnaActual);
+        if (distancia <= alcance) {
+            objetivo.setVida(objetivo.getVida() - daño);
+            System.out.println(nombre + " atacó a " + objetivo.getNombre() + " infligiendo " + daño + " de daño.");
+        } else {
+            System.out.println("Objetivo fuera de alcance.");
+        }
     }
 }
