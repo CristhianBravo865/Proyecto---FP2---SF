@@ -6,9 +6,14 @@ public class GUI {
     private final JFrame frameJugador1;
     private final JFrame frameJugador2;
     private final Tablero tablero;
+    private final JTextArea consola; // Nueva área de texto para la "consola"
 
     public GUI(Tablero tablero, Jugador<NaveTerricola> jugador1, Jugador<NaveAlienigena> jugador2) {
         this.tablero = tablero;
+
+        // Inicializa la "consola" de mensajes
+        consola = new JTextArea(10, 50);
+        consola.setEditable(false);
 
         // Inicializa los tableros para cada jugador
         frameJugador1 = crearVistaJugador("Jugador 1 (Terrícolas)", tablero.getVistaParcial(8, 15));
@@ -46,7 +51,7 @@ public class GUI {
                 int fila = Integer.parseInt(fieldFila.getText());
                 int columna = Integer.parseInt(fieldColumna.getText());
                 // Aquí puedes llamar a un método para mover una nave
-                System.out.println("Mover nave a Fila: " + fila + ", Columna: " + columna);
+                agregarMensajeConsola("Mover nave a Fila: " + fila + ", Columna: " + columna);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(frame, "Por favor, ingresa números válidos en los campos de fila y columna.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -71,9 +76,15 @@ public class GUI {
             }
         }
 
+        // Crear panel inferior para la consola
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        JScrollPane scrollConsola = new JScrollPane(consola);
+        panelInferior.add(scrollConsola, BorderLayout.CENTER);
+
         // Agregar paneles al frame
         frame.add(panelConsola, BorderLayout.NORTH);
         frame.add(panelTablero, BorderLayout.CENTER);
+        frame.add(panelInferior, BorderLayout.SOUTH);
 
         frame.pack();
         frame.setVisible(true);
@@ -125,5 +136,9 @@ public class GUI {
         frameJugador1.setVisible(true);
         frameJugador2.setVisible(true);
     }
-}
 
+    public void agregarMensajeConsola(String mensaje) {
+        consola.append(mensaje + "\n");
+        consola.setCaretPosition(consola.getDocument().getLength());
+    }
+}
