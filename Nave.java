@@ -1,76 +1,54 @@
+import java.util.*;
+
 public abstract class Nave {
     protected String nombre;
-    protected int vida;
-    protected int movimiento;
-    protected int daño;
-    protected int alcance;
-    protected int filaActual;
-    protected int columnaActual;
+    protected int ataque_pts;
+    protected int alcance_movimiento;
+    protected int alcance_disparo;
+    protected int hp;
+    protected int direccion; // 0: Horizontal, 1: Cualquier dirección
+    protected boolean vivo;
+    protected int fila;
+    protected int columna;
 
-    public abstract void mover(int fila, int columna, Tablero tablero);
-    public abstract void atacar(Nave objetivo, Tablero tablero);
-    public abstract void habilidadEspecial();
-
-    // Verifica si una posición está dentro del rango del tablero
-    protected boolean posicionValida(int fila, int columna, Tablero tablero) {
-        return fila >= 0 && fila < 16 && columna >= 0 && columna < 16 
-               && tablero.getTablero()[fila][columna].equals(" ");
+    public Nave() {
+        this.vivo = true;
     }
 
-    // Getters y setters
-    public int getVida() {
-        return vida;
+    public abstract String mover(int fila, int columna, Nave[][] tablero);
+
+    public String atacar(Nave objetivo, Nave[][] tablero) {
+        if (objetivo == null) {
+            return "No hay enemigo en esa posición.";
+        }
+
+        int distanciaFila = Math.abs(this.fila - objetivo.fila);
+        int distanciaColumna = Math.abs(this.columna - objetivo.columna);
+
+        if ((direccion == 0 && distanciaFila != 0) || 
+            (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
+            return "El enemigo está fuera de alcance.";
+        }
+
+        objetivo.hp -= this.ataque_pts;
+        if (objetivo.hp <= 0) {
+            objetivo.vivo = false;
+        }
+        return "Ataque realizado con éxito.";
     }
 
-    public void setVida(int vida) {
-        this.vida = vida;
+    public void comprobarEstado() {
+        this.vivo = this.hp > 0;
     }
 
-    public boolean estaDestruida() {
-        return vida <= 0;
+    protected boolean posicionValidaTablero(int fila, int columna) {
+        return fila >= 0 && fila < 16 && columna >= 0 && columna < 16;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getMovimiento() {
-        return movimiento;
-    }
-
-    public void setMovimiento(int movimiento) {
-        this.movimiento = movimiento;
-    }
-
-    public int getDaño() {
-        return daño;
-    }
-
-    public void setDaño(int daño) {
-        this.daño = daño;
-    }
-
-    public int getFilaActual() {
-        return filaActual;
-    }
-    public void setFilaActual(int filaActual) {
-        this.filaActual = filaActual;
-    }
-    public int getColumnaActual() {
-        return columnaActual;
-    }
-    public void setColumnaActual(int columnaActual) {
-        this.columnaActual = columnaActual;
-    }
-    public int getAlcance() {
-        return alcance;
-    }
-
-    public void setAlcance(int alcance) {
-        this.alcance = alcance;
+    @Override
+    public String toString() {
+        return "Nave [nombre=" + nombre + ", ataque_pts=" + ataque_pts + ", alcance_movimiento=" + alcance_movimiento
+                + ", alcance_disparo=" + alcance_disparo + ", hp=" + hp + ", direccion=" + direccion + ", vivo=" + vivo
+                + ", fila=" + fila + ", columna=" + columna + "]";
     }
 }

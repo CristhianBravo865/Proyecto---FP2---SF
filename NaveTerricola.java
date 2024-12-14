@@ -1,24 +1,36 @@
-public abstract class NaveTerricola extends Nave {
-    @Override
-    public void mover(int fila, int columna, Tablero tablero) {
-        if (posicionValida(fila, columna, tablero)) {
-            tablero.getTablero()[filaActual][columnaActual] = " ";
-            tablero.getTablero()[fila][columna] = nombre;
-            filaActual = fila;
-            columnaActual = columna;
-        } else {
-            System.out.println("Movimiento no válido.");
-        }
+public class NaveTerricola extends Nave {
+    public NaveTerricola() {
+        this.nombre = "Nave Terrícola";
+        this.ataque_pts = 100;
+        this.hp = 100;
+        this.alcance_movimiento = 3;
+        this.alcance_disparo = 4;
+        this.direccion = 0; // Movimiento horizontal por defecto
     }
 
     @Override
-    public void atacar(Nave objetivo, Tablero tablero) {
-        int distancia = Math.abs(filaActual - objetivo.filaActual) + Math.abs(columnaActual - objetivo.columnaActual);
-        if (distancia <= alcance) {
-            objetivo.setVida(objetivo.getVida() - daño);
-            System.out.println(nombre + " atacó a " + objetivo.getNombre() + " infligiendo " + daño + " de daño.");
-        } else {
-            System.out.println("Objetivo fuera de alcance.");
+    public String mover(int fila, int columna, Nave[][] tablero) {
+        if (!posicionValidaTablero(fila, columna)) {
+            return "Movimiento fuera del tablero.";
         }
+
+        if (Math.abs(this.columna - columna) > alcance_movimiento) {
+            return "Movimiento fuera de alcance.";
+        }
+
+        if (tablero[fila][columna] != null) {
+            return "Movimiento inválido: hay otra nave en esa posición.";
+        }
+
+        tablero[this.fila][this.columna] = null;
+        this.fila = fila;
+        this.columna = columna;
+        tablero[fila][columna] = this;
+        return "Movimiento realizado con éxito.";
+    }
+
+    @Override
+    public String atacar(Nave objetivo, Nave[][] tablero) {
+        return super.atacar(objetivo, tablero);
     }
 }
