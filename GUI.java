@@ -8,10 +8,12 @@ public class GUI {
     private Tablero tablero;
     private JButton[][] botonesTablero;
     private JTextArea consola;
+    private int turno;
 
     public GUI() {
         tablero = new Tablero();
         botonesTablero = new JButton[TAMANO][TAMANO];
+        turno = 1; // Inicia con el turno del jugador 1
 
         JFrame frame = new JFrame("GUI - Juego de Naves");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,24 +71,32 @@ public class GUI {
                     int columna = Integer.parseInt(fieldColumna.getText()) - 1;
 
                     if (fila < 0 || fila >= TAMANO || columna < 0 || columna >= TAMANO) {
-                        JOptionPane.showMessageDialog(scrollConsola, "\nPosición fuera del tablero.");
+                        consola.append("\nPosición fuera del tablero.");
                         return;
                     }
 
                     Nave nave = tablero.obtenerNave(fila, columna);
                     if (nave == null) {
-                         JOptionPane.showMessageDialog(scrollConsola,"\nNo hay ninguna nave en la posición seleccionada.");
+                        consola.append("\nNo hay ninguna nave en la posición seleccionada.");
+                        return;
+                    }
+
+                    if ((turno % 2 == 1 && !tablero.getFlota1().getMisNaves().contains(nave)) ||
+                        (turno % 2 == 0 && !tablero.getFlota2().getMisNaves().contains(nave))) {
+                        consola.append("\nNo puedes mover una nave que no te pertenece.");
                         return;
                     }
 
                     int nuevaFila = (fila + 1) % TAMANO; // Ejemplo: mover una fila abajo
                     int nuevaColumna = columna; // Mantener la misma columna
 
-                    consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
-                    actualizarTableroVisual();
-
+                        consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
+                        tablero.actualizarTablero();
+                        actualizarTableroVisual();
+                        turno++;
+                        consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(scrollConsola,"\nPor favor, ingrese valores válidos para fila y columna.");
+                    consola.append("\nPor favor, ingrese valores válidos para fila y columna.");
                 }
             }
         });
@@ -111,8 +121,13 @@ public class GUI {
     private void actualizarTableroVisual() {
         for (int i = 0; i < TAMANO; i++) {
             for (int j = 0; j < TAMANO; j++) {
-                if (tablero.obtenerNave(i, j) != null) {
-                    botonesTablero[i][j].setBackground(Color.RED);
+                Nave nave = tablero.obtenerNave(i, j);
+                if (nave != null) {
+                    if (tablero.getFlota1().getMisNaves().contains(nave)) {
+                        botonesTablero[i][j].setBackground(Color.BLUE); // Flota humana
+                    } else if (tablero.getFlota2().getMisNaves().contains(nave)) {
+                        botonesTablero[i][j].setBackground(Color.GREEN); // Flota alienígena
+                    }
                 } else {
                     botonesTablero[i][j].setBackground(null);
                 }
