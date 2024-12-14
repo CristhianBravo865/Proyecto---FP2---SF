@@ -1,5 +1,3 @@
-import java.util.*;
-
 public abstract class Nave {
     protected String nombre;
     protected int ataque_pts;
@@ -17,25 +15,7 @@ public abstract class Nave {
 
     public abstract String mover(int fila, int columna, Nave[][] tablero);
 
-    public String atacar(Nave objetivo, Nave[][] tablero) {
-        if (objetivo == null) {
-            return "No hay enemigo en esa posición.";
-        }
-
-        int distanciaFila = Math.abs(this.fila - objetivo.fila);
-        int distanciaColumna = Math.abs(this.columna - objetivo.columna);
-
-        if ((direccion == 0 && distanciaFila != 0) || 
-            (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
-            return "El enemigo está fuera de alcance.";
-        }
-
-        objetivo.hp -= this.ataque_pts;
-        if (objetivo.hp <= 0) {
-            objetivo.vivo = false;
-        }
-        return "Ataque realizado con éxito.";
-    }
+    public abstract String atacar(int[] coords_objetivo, Nave[][] tablero);
 
     public void comprobarEstado() {
         this.vivo = this.hp > 0;

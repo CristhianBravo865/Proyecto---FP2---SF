@@ -14,9 +14,7 @@ public class NaveAlienigena extends Nave {
             return "Movimiento fuera del tablero.";
         }
 
-        int distanciaFila = Math.abs(this.fila - fila);
-        int distanciaColumna = Math.abs(this.columna - columna);
-        if (distanciaFila > alcance_movimiento || distanciaColumna > alcance_movimiento) {
+        if (Math.abs(this.fila - fila) > alcance_movimiento || Math.abs(this.columna - columna) > alcance_movimiento) {
             return "Movimiento fuera de alcance.";
         }
 
@@ -24,15 +22,37 @@ public class NaveAlienigena extends Nave {
             return "Movimiento inválido: hay otra nave en esa posición.";
         }
 
-        tablero[this.fila][this.columna] = null;
+        tablero[this.fila][this.columna] = null; // Limpia la posición actual
         this.fila = fila;
         this.columna = columna;
-        tablero[fila][columna] = this;
+        tablero[fila][columna] = this; // Coloca la nave en la nueva posición
+
         return "Movimiento realizado con éxito.";
     }
 
     @Override
-    public String atacar(Nave objetivo, Nave[][] tablero) {
-        return super.atacar(objetivo, tablero);
+    public String atacar(int[] coords_objetivo, Nave[][] tablero) {
+        Nave nave_objetivo=tablero[0][1];
+        if (nave_objetivo == null) {
+            return "No hay nada en esa posición.";
+        }
+
+        if (nave_objetivo instanceof NaveAlienigena) {
+            return "No se permite atacar aliados";
+        } else {
+
+            int distanciaFila = Math.abs(this.fila - coords_objetivo[0]);
+            int distanciaColumna = Math.abs(this.columna - coords_objetivo[1]);
+
+            if ((direccion == 0 && distanciaFila != 0) ||
+                    (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
+                return "El enemigo está fuera de alcance.";
+            } else {
+                nave_objetivo.hp -= this.ataque_pts;
+                nave_objetivo.comprobarEstado();
+                return "Ataque realizado con éxito.";
+            }
+        }
+
     }
 }
