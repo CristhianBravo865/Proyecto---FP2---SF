@@ -107,7 +107,7 @@ public class GUI {
                 }
             }
         });
-        //Action Listener Atacar
+        // Action Listener Atacar
         botonAtacar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,9 +131,11 @@ public class GUI {
                         consola.append("\nNo puedes mover una nave que no te pertenece.");
                         return;
                     }
-                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar")) - 1;                                                                                                          
-                    int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
-                    int[] pos_ataque = {nuevaFila, nuevaColumna};
+                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar"))
+                            - 1;
+                    int nuevaColumna = Integer
+                            .parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
+                    int[] pos_ataque = { nuevaFila, nuevaColumna };
                     System.out.println(nuevaFila);
                     System.out.println(nuevaColumna);
                     consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
@@ -146,6 +148,8 @@ public class GUI {
                 }
             }
         });
+        frame.setSize(600, 400);
+        frame.setLocationRelativeTo(null);
 
         frame.pack();
         frame.setVisible(true);
