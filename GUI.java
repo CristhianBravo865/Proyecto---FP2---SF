@@ -31,7 +31,6 @@ public class GUI {
         JPanel panelControles = new JPanel();
         panelControles.setLayout(new GridLayout(2, 4)); // 2 filas y 4 columnas
 
-        // Añadir los componentes al panel en orden lógico
         panelControles.add(labelFila);
         panelControles.add(fieldFila);
         panelControles.add(botonMover);
@@ -69,6 +68,47 @@ public class GUI {
 
         // Acción del botón Mover
         botonMover.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int fila = Integer.parseInt(fieldFila.getText()) - 1;
+                    int columna = Integer.parseInt(fieldColumna.getText()) - 1;
+
+                    if (fila < 0 || fila >= TAMANO || columna < 0 || columna >= TAMANO) {
+                        consola.append("\nPosición fuera del tablero.");
+                        return;
+                    }
+
+                    Nave nave = tablero.obtenerNave(fila, columna);
+                    if (nave == null) {
+                        consola.append("\nNo hay ninguna nave en la posición seleccionada.");
+                        return;
+                    }
+
+                    if ((turno % 2 == 1 && !tablero.getFlota1().getMisNaves().contains(nave)) ||
+                            (turno % 2 == 0 && !tablero.getFlota2().getMisNaves().contains(nave))) {
+                        consola.append("\nNo puedes mover una nave que no te pertenece.");
+                        return;
+                    }
+                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila")) - 1;// -1
+                                                                                                               // para
+                                                                                                               // pasar
+                                                                                                               // a
+                                                                                                               // indices
+                    int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva columna")) - 1;
+
+                    consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
+                    tablero.actualizarTablero();
+                    actualizarTableroVisual();
+                    turno++;
+                    consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
+                } catch (NumberFormatException ex) {
+                    consola.append("\nPor favor, ingrese valores válidos para fila y columna.");
+                }
+            }
+        });
+        //Action Listener Atacar
+        botonAtacar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
