@@ -86,9 +86,10 @@ public class GUI {
                         consola.append("\nNo puedes mover una nave que no te pertenece.");
                         return;
                     }
-
-                    int nuevaFila = (fila + 1) % TAMANO; // Ejemplo: mover una fila abajo
-                    int nuevaColumna = columna; // Mantener la misma columna
+                    int nuevaFila=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila"));
+                    int nuevaColumna=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva columna"));
+                    //int nuevaFila = (fila + 1) % TAMANO; // Ejemplo: mover una fila abajo
+                    //int nuevaColumna = columna; // Mantener la misma columna
 
                         consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
                         tablero.actualizarTablero();
