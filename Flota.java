@@ -47,6 +47,14 @@ public class Flota<T extends Nave> {
     public boolean flotaVacia() {
         return num_naves == 0;
     }
+    public boolean flotaDestruida() {
+        for (T nave:misNaves){
+            if (nave.isVivo()==true)
+                return false;
+        }
+        return true;
+    }
+
 
     @Override
     public String toString() {

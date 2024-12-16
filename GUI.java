@@ -146,6 +146,12 @@ public class GUI {
                     fieldFila.setText(null);
                     fieldColumna.setText(null);
                     actualizarTableroVisual();
+                    if(tablero.getFlota1().flotaDestruida()){
+                        JOptionPane.showMessageDialog(scrollConsola, "Gano el jugador 2");
+                    }
+                    else if((tablero.getFlota2().flotaDestruida())){
+                        JOptionPane.showMessageDialog(scrollConsola, "Gano el jugador 1");
+                    }
                     turno++;
                     consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
                 } catch (NumberFormatException ex) {

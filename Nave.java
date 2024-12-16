@@ -24,6 +24,14 @@ public abstract class Nave {
     protected boolean posicionValidaTablero(int fila, int columna) {
         return fila >= 0 && fila < 16 && columna >= 0 && columna < 16;
     }
+    
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
+    }
 
     @Override
     public String toString() {
@@ -31,4 +39,5 @@ public abstract class Nave {
                 + ", alcance_disparo=" + alcance_disparo + ", hp=" + hp + ", direccion=" + direccion + ", vivo=" + vivo
                 + ", fila=" + fila + ", columna=" + columna + "]";
     }
+
 }
