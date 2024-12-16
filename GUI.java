@@ -131,14 +131,10 @@ public class GUI {
                         consola.append("\nNo puedes mover una nave que no te pertenece.");
                         return;
                     }
-                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila")) - 1;// -1
-                                                                                                               // para
-                                                                                                               // pasar
-                                                                                                               // a
-                                                                                                               // indices
-                    int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva columna")) - 1;
-
-                    consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
+                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar")) - 1;                                                                                                          
+                    int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
+                    int[] pos_ataque = {nuevaFila, nuevaColumna};
+                    consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
                     tablero.actualizarTablero();
                     actualizarTableroVisual();
                     turno++;
