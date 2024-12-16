@@ -19,9 +19,6 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        JPanel panelControles = new JPanel();
-        panelControles.setLayout(new GridLayout(2, 3));
-
         JLabel labelFila = new JLabel("Fila:");
         JTextField fieldFila = new JTextField();
 
@@ -29,13 +26,21 @@ public class GUI {
         JTextField fieldColumna = new JTextField();
 
         JButton botonMover = new JButton("Mover");
+        JButton botonAtacar = new JButton("Atacar");
 
+        JPanel panelControles = new JPanel();
+        panelControles.setLayout(new GridLayout(2, 4)); // 2 filas y 4 columnas
+
+        // Añadir los componentes al panel en orden lógico
         panelControles.add(labelFila);
         panelControles.add(fieldFila);
-        panelControles.add(new JLabel());
+        panelControles.add(botonMover);
+        panelControles.add(new JLabel()); // Espacio vacío para mantener la alineación
+
         panelControles.add(labelColumna);
         panelControles.add(fieldColumna);
-        panelControles.add(botonMover);
+        panelControles.add(botonAtacar);
+        panelControles.add(new JLabel()); // Otro espacio vacío
 
         JPanel panelTablero = new JPanel();
         panelTablero.setLayout(new GridLayout(TAMANO + 1, TAMANO + 1));
@@ -82,18 +87,22 @@ public class GUI {
                     }
 
                     if ((turno % 2 == 1 && !tablero.getFlota1().getMisNaves().contains(nave)) ||
-                        (turno % 2 == 0 && !tablero.getFlota2().getMisNaves().contains(nave))) {
+                            (turno % 2 == 0 && !tablero.getFlota2().getMisNaves().contains(nave))) {
                         consola.append("\nNo puedes mover una nave que no te pertenece.");
                         return;
                     }
-                    int nuevaFila=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila"))-1;//-1 para pasar a indices
-                    int nuevaColumna=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva columna"))-1;
+                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila")) - 1;// -1
+                                                                                                               // para
+                                                                                                               // pasar
+                                                                                                               // a
+                                                                                                               // indices
+                    int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva columna")) - 1;
 
-                        consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
-                        tablero.actualizarTablero();
-                        actualizarTableroVisual();
-                        turno++;
-                        consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
+                    consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
+                    tablero.actualizarTablero();
+                    actualizarTableroVisual();
+                    turno++;
+                    consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
                 } catch (NumberFormatException ex) {
                     consola.append("\nPor favor, ingrese valores válidos para fila y columna.");
                 }
