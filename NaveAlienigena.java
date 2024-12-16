@@ -53,6 +53,9 @@ public class NaveAlienigena extends Nave {
                 return "Ataque realizado con éxito.";
             }
         }
-
+    }
+    @Override
+    public String toString() {
+        return "NaveAlienigena []"+super.toString();
     }
 }

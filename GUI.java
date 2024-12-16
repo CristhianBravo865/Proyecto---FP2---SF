@@ -134,6 +134,8 @@ public class GUI {
                     int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar")) - 1;                                                                                                          
                     int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
                     int[] pos_ataque = {nuevaFila, nuevaColumna};
+                    System.out.println(nuevaFila);
+                    System.out.println(nuevaColumna);
                     consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
                     tablero.actualizarTablero();
                     actualizarTableroVisual();
@@ -156,7 +158,7 @@ public class GUI {
     private void inicializarNaves() {
         for (int i = 0; i < 5; i++) {
             tablero.getFlota1().agregarALaFlota(new NaveTerricola());
-            tablero.getFlota2().agregarALaFlota(new NaveTerricola());
+            tablero.getFlota2().agregarALaFlota(new NaveAlienigena());
         }
         tablero.posicionarNaves(tablero.getFlota1(), 0, 7);
         tablero.posicionarNaves(tablero.getFlota2(), 8, 15);

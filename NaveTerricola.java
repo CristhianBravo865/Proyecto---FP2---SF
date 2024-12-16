@@ -36,7 +36,7 @@ public class NaveTerricola extends Nave {
         if (nave_objetivo == null) {
             return "No hay nada en esa posición.";
         }
-
+        
         if (nave_objetivo instanceof NaveTerricola) {
             return "No se permite atacar aliados";
         } else {
@@ -53,6 +53,10 @@ public class NaveTerricola extends Nave {
                 return "Ataque realizado con éxito.";
             }
         }
+    }
 
+    @Override
+    public String toString() {
+        return "NaveTerricola []"+super.toString();
     }
 }
