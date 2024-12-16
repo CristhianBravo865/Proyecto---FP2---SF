@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.*;
 public class GUI {
     private static final int TAMANO = 16;
     private Tablero tablero;
@@ -44,6 +44,7 @@ public class GUI {
         JPanel panelTablero = new JPanel();
         panelTablero.setLayout(new GridLayout(TAMANO + 1, TAMANO + 1));
         panelTablero.add(new JLabel(""));
+
         for (int i = 0; i < TAMANO; i++) {
             panelTablero.add(new JLabel(String.valueOf(i + 1), SwingConstants.CENTER));
         }
@@ -65,10 +66,12 @@ public class GUI {
         frame.add(panelControles, BorderLayout.NORTH);
         frame.add(panelTablero, BorderLayout.CENTER);
         frame.add(scrollConsola, BorderLayout.SOUTH);
-        //Primeros mensajes por pantalla
+
+        // Primeros mensajes por pantalla
         consola.append("\nJugador 1 juega con azules (Naves Terricolas) ");
         consola.append("\nJugador 2 juega con verdes (Naves Alienigenas) ");
         consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
+
         // Acción del botón Mover
         botonMover.addActionListener(new ActionListener() {
             @Override
@@ -93,11 +96,8 @@ public class GUI {
                         consola.append("\nNo puedes mover una nave que no te pertenece.");
                         return;
                     }
-                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila")) - 1;// -1
-                                                                                                               // para
-                                                                                                               // pasar
-                                                                                                               // a
-                                                                                                               // indices
+
+                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva fila")) - 1;
                     int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva columna")) - 1;
 
                     consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
@@ -112,7 +112,8 @@ public class GUI {
                 }
             }
         });
-        // Action Listener Atacar
+
+        // Acción del botón Atacar
         botonAtacar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,21 +137,25 @@ public class GUI {
                         consola.append("\nNo puedes atacar con una nave que no te pertenece.");
                         return;
                     }
-                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar"))
-                            - 1;
-                    int nuevaColumna = Integer
-                            .parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
+
+                    int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar")) - 1;
+                    int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
+
                     int[] pos_ataque = { nuevaFila, nuevaColumna };
                     consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
                     tablero.actualizarTablero();
                     fieldFila.setText(null);
                     fieldColumna.setText(null);
                     actualizarTableroVisual();
-                    if(tablero.getFlota1().flotaDestruida()){
-                        JOptionPane.showMessageDialog(scrollConsola, "Gano el jugador 2");
-                    }
-                    else if((tablero.getFlota2().flotaDestruida())){
-                        JOptionPane.showMessageDialog(scrollConsola, "Gano el jugador 1");
+
+                    if (tablero.getFlota1().flotaDestruida()) {
+                        String mensaje = "Gano el jugador 2";
+                        JOptionPane.showMessageDialog(scrollConsola, mensaje);
+                        guardarGanadorEnArchivo(mensaje);
+                    } else if (tablero.getFlota2().flotaDestruida()) {
+                        String mensaje = "Gano el jugador 1";
+                        JOptionPane.showMessageDialog(scrollConsola, mensaje);
+                        guardarGanadorEnArchivo(mensaje);
                     }
                     turno++;
                     consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
@@ -159,9 +164,9 @@ public class GUI {
                 }
             }
         });
+
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
-
         frame.pack();
         frame.setVisible(true);
 
@@ -193,6 +198,15 @@ public class GUI {
                     botonesTablero[i][j].setBackground(null);
                 }
             }
+        }
+    }
+
+    private void guardarGanadorEnArchivo(String mensaje) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ganador.txt", true))) {
+            writer.write(mensaje);
+            writer.newLine();
+        } catch (IOException ex) {
+            consola.append("\nError al guardar el ganador en el archivo.");
         }
     }
 
