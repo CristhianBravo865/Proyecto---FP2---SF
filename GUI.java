@@ -65,7 +65,10 @@ public class GUI {
         frame.add(panelControles, BorderLayout.NORTH);
         frame.add(panelTablero, BorderLayout.CENTER);
         frame.add(scrollConsola, BorderLayout.SOUTH);
-
+        //Primeros mensajes por pantalla
+        consola.append("\nJugador 1 juega con azules (Naves Terricolas) ");
+        consola.append("\nJugador 2 juega con verdes (Naves Alienigenas) ");
+        consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
         // Acción del botón Mover
         botonMover.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +102,8 @@ public class GUI {
 
                     consola.append(nave.mover(nuevaFila, nuevaColumna, tablero.getTablero_arreglod()));
                     tablero.actualizarTablero();
+                    fieldFila.setText(null);
+                    fieldColumna.setText(null);
                     actualizarTableroVisual();
                     turno++;
                     consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
@@ -136,10 +141,10 @@ public class GUI {
                     int nuevaColumna = Integer
                             .parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
                     int[] pos_ataque = { nuevaFila, nuevaColumna };
-                    System.out.println(nuevaFila);
-                    System.out.println(nuevaColumna);
                     consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
                     tablero.actualizarTablero();
+                    fieldFila.setText(null);
+                    fieldColumna.setText(null);
                     actualizarTableroVisual();
                     turno++;
                     consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
