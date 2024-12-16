@@ -152,11 +152,14 @@ public class GUI {
                         String mensaje = "Gano el jugador 2";
                         JOptionPane.showMessageDialog(scrollConsola, mensaje);
                         guardarGanadorEnArchivo(mensaje);
+                        volverAlMenuPrincipal(frame);
                     } else if (tablero.getFlota2().flotaDestruida()) {
                         String mensaje = "Gano el jugador 1";
                         JOptionPane.showMessageDialog(scrollConsola, mensaje);
                         guardarGanadorEnArchivo(mensaje);
+                        volverAlMenuPrincipal(frame);
                     }
+                    
                     turno++;
                     consola.append("\nTurno: Jugador " + (turno % 2 == 1 ? 1 : 2));
                 } catch (NumberFormatException ex) {
@@ -209,7 +212,10 @@ public class GUI {
             consola.append("\nError al guardar el ganador en el archivo.");
         }
     }
-
+    private void volverAlMenuPrincipal(JFrame frameActual) {
+        frameActual.dispose(); // Cierra la ventana actual del juego
+        SwingUtilities.invokeLater(MenuPrincipal::new); // Vuelve al menú principal
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GUI::new);
     }
