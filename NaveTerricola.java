@@ -36,27 +36,27 @@ public class NaveTerricola extends Nave {
         if (nave_objetivo == null) {
             return "No hay nada en esa posición.";
         }
-        
+
         if (nave_objetivo instanceof NaveTerricola) {
             return "No se permite atacar aliados";
         } else {
-
             int distanciaFila = Math.abs(this.fila - coords_objetivo[0]);
             int distanciaColumna = Math.abs(this.columna - coords_objetivo[1]);
 
-            if ((direccion == 0 && distanciaFila != 0) ||
-                    (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
+            // Validación de alcance
+            if (distanciaFila > alcance_disparo || distanciaColumna > alcance_disparo) {
                 return "El enemigo está fuera de alcance.";
-            } else {
-                nave_objetivo.hp -= this.ataque_pts;
-                nave_objetivo.comprobarEstado();
-                return "Ataque realizado con éxito.";
             }
+
+            // Ataque válido
+            nave_objetivo.hp -= this.ataque_pts;
+            nave_objetivo.comprobarEstado();
+            return "Ataque realizado con éxito.";
         }
     }
 
     @Override
     public String toString() {
-        return "NaveTerricola []"+super.toString();
+        return "NaveTerricola []" + super.toString();
     }
 }

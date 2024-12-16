@@ -133,7 +133,7 @@ public class GUI {
 
                     if ((turno % 2 == 1 && !tablero.getFlota1().getMisNaves().contains(nave)) ||
                             (turno % 2 == 0 && !tablero.getFlota2().getMisNaves().contains(nave))) {
-                        consola.append("\nNo puedes mover una nave que no te pertenece.");
+                        consola.append("\nNo puedes atacar con una nave que no te pertenece.");
                         return;
                     }
                     int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar"))
