@@ -32,7 +32,7 @@ public class NaveTerricola extends Nave {
 
     @Override
     public String atacar(int[] coords_objetivo, Nave[][] tablero) {
-        Nave nave_objetivo = tablero[0][1];
+        Nave nave_objetivo = tablero[coords_objetivo[0]][coords_objetivo[1]];
         if (nave_objetivo == null) {
             return "No hay nada en esa posición.";
         }
