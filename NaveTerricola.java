@@ -1,3 +1,6 @@
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 public class NaveTerricola extends Nave {
     public NaveTerricola() {
         this.nombre = "Nave Terrícola";
@@ -54,7 +57,35 @@ public class NaveTerricola extends Nave {
             return "Ataque realizado con éxito.";
         }
     }
+    @Override
+    public String atacarAvanzado(int[] coords_objetivo, Nave[][] tablero) {
+        Nave nave_objetivo = tablero[coords_objetivo[0]][coords_objetivo[1]];
+        if (nave_objetivo == null) {
+            return "No hay nada en esa posición.";
+        }
 
+        if (nave_objetivo instanceof NaveTerricola) {
+            return "No se permite atacar aliados.";
+        } else {
+            int distanciaFila = Math.abs(this.fila - coords_objetivo[0]);
+            int distanciaColumna = Math.abs(this.columna - coords_objetivo[1]);
+
+            if ((direccion == 0 && distanciaFila != 0) ||
+                    (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
+                return "El enemigo está fuera de alcance.";
+            } else {
+                // Lanzar nueva ventana para la batalla
+                SwingUtilities.invokeLater(() -> {
+                    JFrame frame = new JFrame("Space Fight");
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.setSize(800, 600);
+                    frame.setContentPane(new SpaceFight(this, nave_objetivo)); // Pasar solo las naves
+                    frame.setVisible(true);
+                });
+                return "Iniciando batalla avanzada...";
+            }
+        }
+    }
     @Override
     public String toString() {
         return "NaveTerricola []" + super.toString();

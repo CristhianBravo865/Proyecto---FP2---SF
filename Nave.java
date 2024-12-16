@@ -17,6 +17,8 @@ public abstract class Nave {
 
     public abstract String atacar(int[] coords_objetivo, Nave[][] tablero);
 
+    public abstract String atacarAvanzado(int[] coords_objetivo, Nave[][] tablero);
+
     public void comprobarEstado() {
         this.vivo = this.hp > 0;
     }
@@ -31,6 +33,38 @@ public abstract class Nave {
 
     public void setVivo(boolean vivo) {
         this.vivo = vivo;
+    }
+
+    public int getAtaque_pts() {
+        return ataque_pts;
+    }
+
+    public void setAtaque_pts(int ataque_pts) {
+        this.ataque_pts = ataque_pts;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getFila() {
+        return fila;
+    }
+
+    public int getColumna() {
+        return columna;
+    }
+
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
+    public void setColumna(int columna) {
+        this.columna = columna;
     }
 
     @Override
