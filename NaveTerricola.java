@@ -70,8 +70,7 @@ public class NaveTerricola extends Nave {
             int distanciaFila = Math.abs(this.fila - coords_objetivo[0]);
             int distanciaColumna = Math.abs(this.columna - coords_objetivo[1]);
 
-            if ((direccion == 0 && distanciaFila != 0) ||
-                    (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
+            if (distanciaFila > alcance_disparo || distanciaColumna > alcance_disparo) {
                 return "El enemigo está fuera de alcance.";
             } else {
                 // Lanzar nueva ventana para la batalla
@@ -79,7 +78,7 @@ public class NaveTerricola extends Nave {
                     JFrame frame = new JFrame("Space Fight");
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.setSize(800, 600);
-                    frame.setContentPane(new SpaceFight(this, nave_objetivo)); // Pasar solo las naves
+                    frame.setContentPane(new SpaceFight(nave_objetivo,this)); // Pasar solo las naves
                     frame.setVisible(true);
                 });
                 return "Iniciando batalla avanzada...";

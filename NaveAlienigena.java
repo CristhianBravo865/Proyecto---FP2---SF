@@ -80,7 +80,7 @@ public class NaveAlienigena extends Nave {
                     JFrame frame = new JFrame("Space Fight");
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.setSize(800, 600);
-                    frame.setContentPane(new SpaceFight(this, nave_objetivo)); // Pasar solo las naves
+                    frame.setContentPane(new SpaceFight(nave_objetivo, this)); // Pasar solo las naves
                     frame.setVisible(true);
                 });
                 return "Iniciando batalla avanzada...";

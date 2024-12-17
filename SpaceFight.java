@@ -166,6 +166,8 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
         if (naveJugador1.getHp() <= 0 || naveJugador2.getHp() <= 0) {
             timer.stop();
             String ganador = naveJugador1.getHp() <= 0 ? "Jugador 2 gana" : "Jugador 1 gana";
+            naveJugador1.comprobarEstado();
+            naveJugador2.comprobarEstado();
             JOptionPane.showMessageDialog(this, ganador, "Fin del Juego", JOptionPane.INFORMATION_MESSAGE);
             ((Window) this.getTopLevelAncestor()).dispose(); // Cerrar ventana
         }
