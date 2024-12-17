@@ -49,7 +49,7 @@ public class MenuPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frameMenu.dispose(); // Cierra el menú principal
-                SwingUtilities.invokeLater(GUI::new); // Lanza el juego actual
+                SwingUtilities.invokeLater(() -> new GUI(false)); 
             }
         });
 
@@ -57,10 +57,8 @@ public class MenuPrincipal {
         botonJuegoAvanzado.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frameMenu, 
-                        "La modalidad de Juego Avanzado aún no está implementada.", 
-                        "Juego Avanzado", 
-                        JOptionPane.INFORMATION_MESSAGE);
+                frameMenu.dispose(); // Cierra el menú principal
+                SwingUtilities.invokeLater(() -> new GUI(true)); 
             }
         });
 
@@ -76,9 +74,9 @@ public class MenuPrincipal {
         botonCerrarJuego.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int confirmacion = JOptionPane.showConfirmDialog(frameMenu, 
-                        "¿Seguro que deseas salir del juego?", 
-                        "Cerrar Juego", 
+                int confirmacion = JOptionPane.showConfirmDialog(frameMenu,
+                        "¿Seguro que deseas salir del juego?",
+                        "Cerrar Juego",
                         JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     System.exit(0); // Cierra la aplicación
@@ -107,13 +105,9 @@ public class MenuPrincipal {
             ganadores.append("Error al leer el archivo de ganadores.");
         }
 
-        JOptionPane.showMessageDialog(frameMenu, 
-                ganadores.toString(), 
-                "Lista de Ganadores", 
+        JOptionPane.showMessageDialog(frameMenu,
+                ganadores.toString(),
+                "Lista de Ganadores",
                 JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MenuPrincipal::new);
     }
 }

@@ -9,7 +9,16 @@ public class GUI {
     private JButton[][] botonesTablero;
     private JTextArea consola;
     private int turno;
-
+    private boolean modoAvanzado;
+    public GUI(boolean modoAvanzado) {
+        this(); 
+        this.modoAvanzado = modoAvanzado;
+        if (modoAvanzado) {
+            consola.append("\nModo avanzado activado: Los ataques llevan a Space Fight.");
+        } else {
+            consola.append("\nModo simple activado: Ataques simples.");
+        }
+    }
     public GUI() {
         tablero = new Tablero();
         botonesTablero = new JButton[TAMANO][TAMANO];
@@ -140,9 +149,11 @@ public class GUI {
 
                     int nuevaFila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila de la nave a atacar")) - 1;
                     int nuevaColumna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna de la nave a atacar")) - 1;
-
                     int[] pos_ataque = { nuevaFila, nuevaColumna };
-                    consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
+                    if (modoAvanzado)
+                        consola.append(nave.atacarAvanzado(pos_ataque, tablero.getTablero_arreglod()));
+                    else
+                        consola.append(nave.atacar(pos_ataque, tablero.getTablero_arreglod()));
                     tablero.actualizarTablero();
                     fieldFila.setText(null);
                     fieldColumna.setText(null);
@@ -215,8 +226,5 @@ public class GUI {
     private void volverAlMenuPrincipal(JFrame frameActual) {
         frameActual.dispose(); // Cierra la ventana actual del juego
         SwingUtilities.invokeLater(MenuPrincipal::new); // Vuelve al menú principal
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(GUI::new);
     }
 }
