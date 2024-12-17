@@ -8,6 +8,8 @@ public abstract class Nave {
     protected boolean vivo;
     protected int fila;
     protected int columna;
+    protected int filaSF;
+    protected int columnaSF;
 
     public Nave() {
         this.vivo = true;
@@ -65,6 +67,22 @@ public abstract class Nave {
 
     public void setColumna(int columna) {
         this.columna = columna;
+    }
+
+    public int getFilaSF() {
+        return filaSF;
+    }
+
+    public void setFilaSF(int filaSF) {
+        this.filaSF = filaSF;
+    }
+
+    public int getColumnaSF() {
+        return columnaSF;
+    }
+
+    public void setColumnaSF(int columnaSF) {
+        this.columnaSF = columnaSF;
     }
 
     @Override

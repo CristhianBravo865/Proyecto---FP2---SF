@@ -1,5 +1,5 @@
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import javax.swing.JDialog;
+import java.awt.Frame;
 
 public class NaveAlienigena extends Nave {
     public NaveAlienigena() {
@@ -75,15 +75,20 @@ public class NaveAlienigena extends Nave {
                     (direccion == 1 && distanciaFila > alcance_disparo && distanciaColumna > alcance_disparo)) {
                 return "El enemigo está fuera de alcance.";
             } else {
-                // Lanzar nueva ventana para la batalla
-                SwingUtilities.invokeLater(() -> {
-                    JFrame frame = new JFrame("Space Fight");
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    frame.setSize(800, 600);
-                    frame.setContentPane(new SpaceFight(nave_objetivo, this)); // Pasar solo las naves
-                    frame.setVisible(true);
-                });
-                return "Iniciando batalla avanzada...";
+                // Crear y lanzar un JDialog modal
+                JDialog dialog = new JDialog((Frame) null, "Space Fight", true); // Modal
+                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                dialog.setSize(800, 600);
+                dialog.setResizable(false);
+                dialog.setLocationRelativeTo(null);
+
+                // Configurar el panel SpaceFight con las naves
+                SpaceFight spaceFight = new SpaceFight(this, nave_objetivo);
+                dialog.setContentPane(spaceFight);
+                dialog.setVisible(true);
+                this.comprobarEstado();
+                nave_objetivo.comprobarEstado();
+                return "\nBatalla avanzada finalizada.";
             }
         }
     }

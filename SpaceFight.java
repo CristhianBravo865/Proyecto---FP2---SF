@@ -27,11 +27,11 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
         this.addKeyListener(this);
         // Posiciones iniciales de las naves
         int centroX = 400 - anchoNave / 2;
-        this.naveJugador1.setColumna(centroX);
-        this.naveJugador1.setFila(500);
+        this.naveJugador1.setColumnaSF(centroX);
+        this.naveJugador1.setFilaSF(500);
 
-        this.naveJugador2.setColumna(centroX);
-        this.naveJugador2.setFila(45);
+        this.naveJugador2.setColumnaSF(centroX);
+        this.naveJugador2.setFilaSF(45);
 
         timer = new Timer(16, this);
         meteoritos = new ArrayList<>();
@@ -56,10 +56,10 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
 
         // Dibujar naves con colores
         g.setColor(naveJugador1 instanceof NaveTerricola ? Color.BLUE : Color.GREEN);
-        g.fillRect(naveJugador1.getColumna(), naveJugador1.getFila(), anchoNave, altoNave);
+        g.fillRect(naveJugador1.getColumnaSF(), naveJugador1.getFilaSF(), anchoNave, altoNave);
 
         g.setColor(naveJugador2 instanceof NaveTerricola ? Color.BLUE : Color.GREEN);
-        g.fillRect(naveJugador2.getColumna(), naveJugador2.getFila(), anchoNave, altoNave);
+        g.fillRect(naveJugador2.getColumnaSF(), naveJugador2.getFilaSF(), anchoNave, altoNave);
 
         // Dibujar proyectiles
         g.setColor(Color.YELLOW);
@@ -83,23 +83,23 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
     }
 
     private void moverNaves() {
-        if (w && naveJugador1.getFila() > 0)
-            naveJugador1.setFila(naveJugador1.getFila() - 5);
-        if (s && naveJugador1.getFila() < getHeight() - altoNave)
-            naveJugador1.setFila(naveJugador1.getFila() + 5);
-        if (a && naveJugador1.getColumna() > 0)
-            naveJugador1.setColumna(naveJugador1.getColumna() - 5);
-        if (d && naveJugador1.getColumna() < getWidth() - anchoNave)
-            naveJugador1.setColumna(naveJugador1.getColumna() + 5);
+        if (w && naveJugador1.getFilaSF() > 0)
+            naveJugador1.setFilaSF(naveJugador1.getFilaSF() - 5);
+        if (s && naveJugador1.getFilaSF() < getHeight() - altoNave)
+            naveJugador1.setFilaSF(naveJugador1.getFilaSF() + 5);
+        if (a && naveJugador1.getColumnaSF() > 0)
+            naveJugador1.setColumnaSF(naveJugador1.getColumnaSF() - 5);
+        if (d && naveJugador1.getColumnaSF() < getWidth() - anchoNave)
+            naveJugador1.setColumnaSF(naveJugador1.getColumnaSF() + 5);
 
-        if (up && naveJugador2.getFila() > 0)
-            naveJugador2.setFila(naveJugador2.getFila() - 5);
-        if (down && naveJugador2.getFila() < getHeight() - altoNave)
-            naveJugador2.setFila(naveJugador2.getFila() + 5);
-        if (left && naveJugador2.getColumna() > 0)
-            naveJugador2.setColumna(naveJugador2.getColumna() - 5);
-        if (right && naveJugador2.getColumna() < getWidth() - anchoNave)
-            naveJugador2.setColumna(naveJugador2.getColumna() + 5);
+        if (up && naveJugador2.getFilaSF() > 0)
+            naveJugador2.setFilaSF(naveJugador2.getFilaSF() - 5);
+        if (down && naveJugador2.getFilaSF() < getHeight() - altoNave)
+            naveJugador2.setFilaSF(naveJugador2.getFilaSF() + 5);
+        if (left && naveJugador2.getColumnaSF() > 0)
+            naveJugador2.setColumnaSF(naveJugador2.getColumnaSF() - 5);
+        if (right && naveJugador2.getColumnaSF() < getWidth() - anchoNave)
+            naveJugador2.setColumnaSF(naveJugador2.getColumnaSF() + 5);
     }
 
     private void moverProyectiles() {
@@ -118,9 +118,9 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
 
         // Disparo automático
         if (Math.random() < 0.02) {
-            proyectiles1.add(new Rectangle(naveJugador1.getColumna() + anchoNave / 2, naveJugador1.getFila(),
+            proyectiles1.add(new Rectangle(naveJugador1.getColumnaSF() + anchoNave / 2, naveJugador1.getFilaSF(),
                     anchoProyectil, altoProyectil));
-            proyectiles2.add(new Rectangle(naveJugador2.getColumna() + anchoNave / 2, naveJugador2.getFila() + altoNave,
+            proyectiles2.add(new Rectangle(naveJugador2.getColumnaSF() + anchoNave / 2, naveJugador2.getFilaSF() + altoNave,
                     anchoProyectil, altoProyectil));
         }
     }
@@ -140,24 +140,24 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
 
     private void verificarColisiones() {
         for (Rectangle meteorito : meteoritos) {
-            if (meteorito.intersects(naveJugador1.getColumna(), naveJugador1.getFila(), anchoNave, altoNave)) {
+            if (meteorito.intersects(naveJugador1.getColumnaSF(), naveJugador1.getFilaSF(), anchoNave, altoNave)) {
                 naveJugador1.setHp(naveJugador1.getHp() - 10);
                 meteorito.setLocation(-100, -100); // Eliminar meteorito
             }
-            if (meteorito.intersects(naveJugador2.getColumna(), naveJugador2.getFila(), anchoNave, altoNave)) {
+            if (meteorito.intersects(naveJugador2.getColumnaSF(), naveJugador2.getFilaSF(), anchoNave, altoNave)) {
                 naveJugador2.setHp(naveJugador2.getHp() - 10);
                 meteorito.setLocation(-100, -100); // Eliminar meteorito
             }
         }
 
         for (Rectangle proyectil : proyectiles1) {
-            if (proyectil.intersects(naveJugador2.getColumna(), naveJugador2.getFila(), anchoNave, altoNave)) {
+            if (proyectil.intersects(naveJugador2.getColumnaSF(), naveJugador2.getFilaSF(), anchoNave, altoNave)) {
                 naveJugador2.setHp(naveJugador2.getHp() - naveJugador1.getAtaque_pts());
                 proyectil.setLocation(-100, -100); // Eliminar proyectil
             }
         }
         for (Rectangle proyectil : proyectiles2) {
-            if (proyectil.intersects(naveJugador1.getColumna(), naveJugador1.getFila(), anchoNave, altoNave)) {
+            if (proyectil.intersects(naveJugador1.getColumnaSF(), naveJugador1.getFilaSF(), anchoNave, altoNave)) {
                 naveJugador1.setHp(naveJugador1.getHp() - naveJugador2.getAtaque_pts());
                 proyectil.setLocation(-100, -100); // Eliminar proyectil
             }
