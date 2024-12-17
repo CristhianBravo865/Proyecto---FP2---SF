@@ -21,18 +21,26 @@ public class SpaceFight extends JPanel implements ActionListener, KeyListener {
     public SpaceFight(Nave jugador1, Nave jugador2) {
         this.naveJugador1 = jugador1;
         this.naveJugador2 = jugador2;
-
+    
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(this);
-
-        timer = new Timer(16, this); // 60 FPS (16 ms entre frames)
+    
+        int centroX = 400 - anchoNave / 2; 
+        this.naveJugador1.setColumna(centroX);
+        this.naveJugador1.setFila(500); 
+    
+        this.naveJugador2.setColumna(centroX);
+        this.naveJugador2.setFila(45); 
+    
+        timer = new Timer(16, this);
         meteoritos = new ArrayList<>();
         proyectiles1 = new ArrayList<>();
         proyectiles2 = new ArrayList<>();
-
+    
         timer.start();
     }
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
