@@ -7,7 +7,7 @@ public class NaveTerricola extends Nave {
         this.ataque_pts = 100;
         this.hp = 100;
         this.alcance_movimiento = 3;
-        this.alcance_disparo = 16;
+        this.alcance_disparo = 4;
         this.direccion = 0; // Movimiento horizontal por defecto
     }
 

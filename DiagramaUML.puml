@@ -1,0 +1,159 @@
+@startuml
+abstract class Nave {
+    # String nombre
+    # int ataque_pts
+    # int alcance_movimiento
+    # int alcance_disparo
+    # int hp
+    # int direccion
+    # boolean vivo
+    # int fila
+    # int columna
+    # int filaSF
+    # int columnaSF
+    
+    Nave()
+    + String mover(int fila, int columna, Nave[][] tablero)
+    + String atacar(int[] coords_objetivo, Nave[][] tablero)
+    + String atacarAvanzado(int[] coords_objetivo, Nave[][] tablero)
+    + void comprobarEstado()
+    # boolean posicionValidaTablero(int fila, int columna)
+    + boolean isVivo()
+    + void setVivo(boolean vivo)
+    + int getAtaque_pts()
+    + void setAtaque_pts(int ataque_pts)
+    + int getHp()
+    + void setHp(int hp)
+    + int getFila()
+    + int getColumna()
+    + void setFila(int fila)
+    + void setColumna(int columna)
+    + int getFilaSF()
+    + void setFilaSF(int filaSF)
+    + int getColumnaSF()
+    + void setColumnaSF(int columnaSF)
+    + String toString()
+}
+
+class NaveAlienigena {
+    + NaveAlienigena()
+    + String mover(int fila, int columna, Nave[][] tablero)
+    + String atacar(int[] coords_objetivo, Nave[][] tablero)
+    + String atacarAvanzado(int[] coords_objetivo, Nave[][] tablero)
+    + String toString()
+}
+
+class NaveTerricola {
+    + NaveTerricola()
+    + String mover(int fila, int columna, Nave[][] tablero)
+    + String atacar(int[] coords_objetivo, Nave[][] tablero)
+    + String atacarAvanzado(int[] coords_objetivo, Nave[][] tablero)
+    + String toString()
+}
+
+class Flota<T extends Nave> {
+    - ArrayList<T> misNaves
+    - static int num_flotas
+    - static final int num_max_naves
+    - Random random
+    - int num_naves
+    
+    + Flota()
+    + ArrayList<T> getMisNaves()
+    + void eliminarNave(T nave)
+    + void eliminarNave(int index)
+    + static <T extends Nave> void eliminarNave(T nave, Flota<T> flota)
+    + void agregarALaFlota(T nave)
+    + boolean flotaVacia()
+    + boolean flotaDestruida()
+    + String toString()
+}
+
+class Tablero {
+    - Nave[][] tablero_arreglod
+    - Flota<NaveTerricola> flota1
+    - Flota<NaveAlienigena> flota2
+    
+    + Tablero()
+    + Flota<NaveTerricola> getFlota1()
+    + Flota<NaveAlienigena> getFlota2()
+    + void posicionarNaves(Flota<? extends Nave> flota, int rangoInicio, int rangoFin)
+    + void actualizarTablero()
+    + Nave obtenerNave(int f, int c)
+    + Nave[][] getTablero_arreglod()
+}
+class SpaceFight {
+    -Nave naveJugador1
+    -Nave naveJugador2
+    -Timer timer
+    -ArrayList<Rectangle> meteoritos
+    -ArrayList<Rectangle> proyectiles1
+    -ArrayList<Rectangle> proyectiles2
+    -int anchoNave
+    -int altoNave
+    -int anchoProyectil
+    -int altoProyectil
+    -boolean w
+    -boolean a
+    -boolean s
+    -boolean d
+    -boolean up
+    -boolean down
+    -boolean left
+    -boolean right
+    +SpaceFight(Nave jugador1, Nave jugador2)
+    +void actionPerformed(ActionEvent e)
+    +void paintComponent(Graphics g)
+    -void moverNaves()
+    -void moverProyectiles()
+    -void moverMeteoritos()
+    -void verificarColisiones()
+    +void keyPressed(KeyEvent e)
+    +void keyReleased(KeyEvent e)
+    +void keyTyped(KeyEvent e)
+}
+
+class GUI {
+    -static final int TAMANO
+    -Tablero tablero
+    -JButton[][] botonesTablero
+    -JTextArea consola
+    -int turno
+    -boolean modoAvanzado
+    +GUI(modoAvanzado: boolean)
+    +GUI()
+    -void inicializarNaves()
+    -void actualizarTableroVisual()
+    -void guardarGanadorEnArchivo(mensaje: String)
+    -void volverAlMenuPrincipal(frameActual: JFrame)
+}
+
+class MenuPrincipal {
+    -JFrame frameMenu
+    +MenuPrincipal()
+    -void mostrarListaGanadores()
+}
+
+
+Nave <|-- NaveAlienigena
+Nave <|-- NaveTerricola
+Flota *-- "1..10" Nave : compone >
+SpaceFight *-- "1" NaveAlienigena : contiene >
+SpaceFight *-- "1" NaveTerricola : contiene >
+class "Flota<T>" as Flota
+Nave ..> SpaceFight : a traves de atacarAvanzado > 
+
+
+Tablero "1" *-- "2" Flota : compone a
+
+
+Tablero "1" *-- "1" GUI : compone a
+
+
+MenuPrincipal ..> GUI
+
+
+
+
+
+@enduml

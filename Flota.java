@@ -3,7 +3,7 @@ import java.util.*;
 public class Flota<T extends Nave> {
     private ArrayList<T> misNaves;
     private static int num_flotas = 0;
-    private static final int num_max_naves = 1;
+    private static final int num_max_naves = 10;
     private Random random = new Random();
     private int num_naves = 0;
 
